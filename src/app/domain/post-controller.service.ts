@@ -9,7 +9,7 @@ import { NewPostDTO, Post, UpdatedPostDTO } from '../entities/Posts';
   providedIn: 'root',
 })
 export class PostControllerService {
-  private posts: Observable<Post[]> | undefined;
+  posts: Observable<Post[]> | undefined;
 
   constructor(private postGateway: PostGatewayService) {}
 
@@ -33,8 +33,7 @@ export class PostControllerService {
         if (!!this.posts) {
           this.posts = this.posts.pipe(
             map((posts) => {
-              posts.push(createdPost);
-              return posts;
+              return [...posts, createdPost];
             })
           );
         } else this.posts = of([createdPost]);
