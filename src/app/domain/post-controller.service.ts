@@ -9,21 +9,21 @@ import { NewPostDTO, Post, UpdatedPostDTO } from '../entities/Posts';
   providedIn: 'root',
 })
 export class PostControllerService {
-  private posts: Observable<Post[]> | undefined;
+  private posts$: Observable<Post[]> | undefined;
 
   constructor(private postGateway: PostGatewayService) {}
 
   public getPosts(): Observable<Post[]> {
-    if (!this.posts) this.posts = this.postGateway.getAllPosts();
-    return this.posts;
+    if (!this.posts$) this.posts$ = this.postGateway.getAllPosts();
+    return this.posts$;
   }
 
   public setPosts(posts: Post[]): void {
-    this.posts = of(posts);
+    this.posts$ = of(posts);
   }
 
   public getPostById(id: number): Observable<Post | undefined> | void {
-    const targetPost = this.posts?.pipe(
+    const targetPost = this.posts$?.pipe(
       map((posts) => posts.find((post) => post.id === id))
     );
     if (targetPost) return targetPost;
@@ -34,13 +34,13 @@ export class PostControllerService {
       .addPost(newPost)
       .pipe(take(1))
       .subscribe((createdPost) => {
-        if (!!this.posts) {
-          this.posts = this.posts.pipe(
+        if (!!this.posts$) {
+          this.posts$ = this.posts$.pipe(
             map((posts) => {
               return [...posts, createdPost];
             })
           );
-        } else this.posts = of([createdPost]);
+        } else this.posts$ = of([createdPost]);
       });
   }
 
@@ -51,7 +51,7 @@ export class PostControllerService {
           .updatePost({ ...targetPost, ...update })
           .pipe(take(1))
           .subscribe((updatedPost) => {
-            this.posts = this.posts?.pipe(
+            this.posts$ = this.posts$?.pipe(
               map((posts) => {
                 const index = posts.findIndex((post) => post.id === update.id);
                 posts[index] = updatedPost;
@@ -65,7 +65,7 @@ export class PostControllerService {
 
   public deletePost(id: number): void {
     this.postGateway.deletePost(id);
-    this.posts = this.posts?.pipe(
+    this.posts$ = this.posts$?.pipe(
       map((posts) => {
         const index = posts.findIndex((post) => post.id === id);
         return posts.slice(index, index + 1);
