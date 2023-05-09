@@ -13,11 +13,13 @@ export class UserGatewayService {
 
   constructor(private http: HttpClient) {}
 
-  getUserByPost(id: number): Observable<User> {
-    return this.http.get<User>(this.API_URL_USER + `${id}`).pipe(
-      map((user: User) => {
-        return { id: user.id, name: user.name };
-      })
+  getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.API_URL_USER).pipe(
+      map((users: User[]) =>
+        users.map((user: User) => {
+          return { id: user.id, name: user.name };
+        })
+      )
     );
   }
 }

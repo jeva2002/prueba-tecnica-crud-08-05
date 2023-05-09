@@ -24,22 +24,26 @@ describe('UserGatewayService', () => {
     expect(userService).toBeTruthy();
   });
 
-  describe('test for get users by id', () => {
-    it('should get an user with it has the selected id', (doneFn) => {
-      const mockData: User = {
-        id: 1,
-        name: 'Juanito',
-      };
+  describe('test for get users', () => {
+    it('should get the users', (doneFn) => {
+      const mockData: User[] = [
+        {
+          id: 1,
+          name: 'Juanito',
+        },
+        {
+          id: 2,
+          name: 'Jorge',
+        },
+      ];
 
-      userService.getUserByPost(mockData.id).subscribe((data) => {
-        expect(data).toEqual(mockData);
+      userService.getAllUsers().subscribe((data) => {
+        expect(data.length).toEqual(mockData.length);
 
         doneFn();
       });
 
-      const req = httpController.expectOne(
-        userService.API_URL_USER + mockData.id
-      );
+      const req = httpController.expectOne(userService.API_URL_USER);
       req.flush(mockData);
       httpController.verify();
     });
