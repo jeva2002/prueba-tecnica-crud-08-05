@@ -1,4 +1,5 @@
-import { Post } from "./Posts";
+import { faker } from '@faker-js/faker';
+import { Post } from './Posts';
 
 export const postsMock: Post[] = [
   {
@@ -14,3 +15,16 @@ export const postsMock: Post[] = [
     userId: 1,
   },
 ];
+
+export const createPostMock = (arrayLength: number): Post[] => {
+  const mock: Post[] = [];
+  for (let i = 1; i <= arrayLength; i++) {
+    mock.push({
+      id: i,
+      body: faker.animal.type(),
+      title: faker.animal.type(),
+      userId: Math.floor(Math.random() * 100) + 1,
+    });
+  }
+  return mock;
+};
