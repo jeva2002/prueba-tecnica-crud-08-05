@@ -15,9 +15,14 @@ const routes: Routes = [
     title: 'Publicar',
   },
   {
-    path: '',
+    path: 'lista-productos/:page',
     component: HomeComponent,
     title: 'Lista de publicaciones',
+  },
+  {
+    path: '',
+    redirectTo: 'lista-productos/1',
+    pathMatch: 'full',
   },
 ];
 

@@ -1,1 +1,37 @@
-<p>pagination works!</p>
+<section class="container-fluid d-flex justify-content-center">
+  <nav>
+    <ul class="pagination">
+      <li class="page-item">
+        <a
+          class="page-link"
+          [ngClass]="{ disabled: currentPage <= 1 }"
+          [routerLink]="['/lista-productos/', 1]"
+          aria-label="Previous"
+        >
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li *ngFor="let page of avalaiblePagesOptions" class="page-item">
+        <a
+          class="page-link"
+          [ngClass]="{
+            active: page === currentPage,
+            disabled: page > pagesByPosts
+          }"
+          [routerLink]="['/lista-productos/', page]"
+          >{{ page }}</a
+        >
+      </li>
+      <li class="page-item">
+        <a
+          class="page-link"
+          [ngClass]="{ disabled: currentPage >= pagesByPosts }"
+          [routerLink]="['/lista-productos/', pagesByPosts]"
+          aria-label="Next"
+        >
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</section>

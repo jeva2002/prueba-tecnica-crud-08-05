@@ -23,4 +23,8 @@ export class HomeComponent implements OnInit {
     this.users$ = this.usersController.getAllUsers();
     this.posts$ = this.postsController.getPosts();
   }
+
+  public getPagesByPosts(posts: Post[]): number {
+    return Math.ceil(posts.length / 15);
+  }
 }

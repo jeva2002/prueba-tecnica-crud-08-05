@@ -16,5 +16,11 @@
 </div>
 
 <main>
-  <app-posts-table *ngIf="posts$ | async as posts" [posts]="posts" />
+  <ng-container *ngIf="posts$ | async as posts">
+    <app-pagination [pagesByPosts]="getPagesByPosts(posts)" />
+    <div class="my-2">
+      <app-posts-table [posts]="posts" />
+    </div>
+    <app-pagination [pagesByPosts]="getPagesByPosts(posts)" />
+  </ng-container>
 </main>
