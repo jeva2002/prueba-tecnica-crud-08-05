@@ -1,1 +1,31 @@
-<p>posts-table works!</p>
+<app-pagination />
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Título</th>
+        <th scope="col">Texto</th>
+        <th class="hidden" scope="col">Creador</th>
+        <th scope="col">Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let post of posts | slice : firstPost : lastPost">
+        <th scope="row">{{ post.id }}</th>
+        <td class="post-title">{{ post.title }}</td>
+        <td class="post-body">{{ post.body }}</td>
+        <td class="post-creator hidden">{{ post.userId }}</td>
+        <td class="post-options">
+          <a
+            [routerLink]="['modificar-publicacion/', post.id]"
+            class="edit-post"
+            >Editar</a
+          >
+          <br />
+          <span class="delete-post">Eliminar</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,35 @@
+table {
+  tbody {
+    .post-title,
+    .post-creator {
+      width: 200px;
+    }
+
+    .delete-post,
+    .edit-post {
+      cursor: pointer;
+      text-decoration: none;
+      color: #2e294e;
+      font-weight: 500;
+    }
+
+    .delete-post:hover,
+    .edit-post:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  table {
+    .hidden {
+      display: none;
+    }
+
+    tbody {
+      .post-title {
+        width: 100px;
+      }
+    }
+  }
+}
