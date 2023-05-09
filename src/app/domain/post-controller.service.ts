@@ -9,13 +9,17 @@ import { NewPostDTO, Post, UpdatedPostDTO } from '../entities/Posts';
   providedIn: 'root',
 })
 export class PostControllerService {
-  posts: Observable<Post[]> | undefined;
+  private posts: Observable<Post[]> | undefined;
 
   constructor(private postGateway: PostGatewayService) {}
 
   public getPosts(): Observable<Post[]> {
     if (!this.posts) this.posts = this.postGateway.getAllPosts();
     return this.posts;
+  }
+
+  public setPosts(posts: Post[]): void {
+    this.posts = of(posts);
   }
 
   public getPostById(id: number): Observable<Post | undefined> | void {
@@ -41,22 +45,26 @@ export class PostControllerService {
   }
 
   public updatePost(update: UpdatedPostDTO): void {
-    this.postGateway
-      .updatePost(update)
-      .pipe(take(1))
-      .subscribe((updatedPost) => {
-        this.posts = this.posts?.pipe(
-          map((posts) => {
-            const index = posts.findIndex((post) => post.id === update.id);
-            posts[index] = updatedPost;
-            return posts;
-          })
-        );
-      });
+    this.getPostById(update.id)?.subscribe((targetPost) => {
+      if (targetPost) {
+        this.postGateway
+          .updatePost({ ...targetPost, ...update })
+          .pipe(take(1))
+          .subscribe((updatedPost) => {
+            this.posts = this.posts?.pipe(
+              map((posts) => {
+                const index = posts.findIndex((post) => post.id === update.id);
+                posts[index] = updatedPost;
+                return posts;
+              })
+            );
+          });
+      }
+    });
   }
 
   public deletePost(id: number): void {
-    this.postGateway.deletePost(id).subscribe();
+    this.postGateway.deletePost(id);
     this.posts = this.posts?.pipe(
       map((posts) => {
         const index = posts.findIndex((post) => post.id === id);

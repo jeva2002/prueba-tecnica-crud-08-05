@@ -68,8 +68,8 @@ describe('PostGatewayService', () => {
   });
 
   describe('test for deletePost', () => {
-    it('should delete a post', (doneFn) => {
-      postService.deletePost(1).subscribe(() => doneFn());
+    it('should delete a post', async () => {
+      await postService.deletePost(1);
 
       const req = httpController.expectOne(
         postService.API_URL_POSTS + `${postsMock[0].id}`
