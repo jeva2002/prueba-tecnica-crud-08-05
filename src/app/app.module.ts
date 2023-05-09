@@ -5,18 +5,22 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './presentation/views/home/home.component';
+import { PaginationComponent } from './presentation/components/home/pagination/pagination.component';
+import { PostsTableComponent } from './presentation/components/home/posts-table/posts-table.component';
+import { PostComponent } from './presentation/views/post/post.component';
+import { FormComponent } from './presentation/components/post/form/form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    PaginationComponent,
+    PostsTableComponent,
+    PostComponent,
+    FormComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-  ],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
