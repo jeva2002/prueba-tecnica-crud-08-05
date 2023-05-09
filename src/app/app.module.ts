@@ -9,6 +9,7 @@ import { PaginationComponent } from './presentation/components/home/pagination/p
 import { PostsTableComponent } from './presentation/components/home/posts-table/posts-table.component';
 import { PostComponent } from './presentation/views/post/post.component';
 import { FormComponent } from './presentation/components/post/form/form.component';
+import { AuthorPipe } from './presentation/pipes/author.pipe';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { FormComponent } from './presentation/components/post/form/form.componen
     PostsTableComponent,
     PostComponent,
     FormComponent,
+    AuthorPipe,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],

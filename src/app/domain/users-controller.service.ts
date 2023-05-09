@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { User } from '../entities/Users';
 import { UserGatewayService } from '../persistence/user-gateway.service';
 
@@ -14,5 +14,13 @@ export class UsersControllerService {
   public getAllUsers(): Observable<User[]> {
     if (!this.users$) this.users$ = this.usersGateway.getAllUsers();
     return this.users$;
+  }
+
+  public getUserById(id: number): Observable<User | undefined> | undefined {
+    return this.users$?.pipe(
+      map((users) => {
+        return users.find((user) => user.id === id);
+      })
+    );
   }
 }
