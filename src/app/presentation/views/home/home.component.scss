@@ -1,0 +1,30 @@
+#create-post {
+  background-color: #212529;
+  margin-bottom: 20px;
+
+  #create-post-message {
+    color: #ededed;
+    font-weight: bold;
+    font-size: 18px;
+    margin-left: -500px;
+  }
+}
+
+#create-post:hover {
+  #create-post-message {
+    animation-name: slideIn;
+    animation-duration: 1s;
+    animation-timing-function: ease;
+    margin-left: -80px;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    margin-left: -500px;
+  }
+
+  to {
+    margin-left: -80px;
+  }
+}

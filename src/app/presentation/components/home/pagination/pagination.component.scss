@@ -1,0 +1,22 @@
+section {
+  nav {
+    ul {
+      .page-item {
+        .page-link.active {
+          background-color: #212529;
+          border-color: #212529;
+          color: white;
+        }
+
+        .page-link.disabled {
+          color: #bbb;
+        }
+
+        a {
+          color: #212529;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
