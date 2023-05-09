@@ -9,12 +9,12 @@ import { User } from '../entities/Users';
   providedIn: 'root',
 })
 export class UserGatewayService {
-  private API_URL_USER = API_URL + 'users';
+  API_URL_USER = API_URL + 'users';
 
   constructor(private http: HttpClient) {}
 
-  getUserByPost(): Observable<User> {
-    return this.http.get<User>(this.API_URL_USER).pipe(
+  getUserByPost(id: number): Observable<User> {
+    return this.http.get<User>(this.API_URL_USER + `${id}`).pipe(
       map((user: User) => {
         return { id: user.id, name: user.name };
       })
