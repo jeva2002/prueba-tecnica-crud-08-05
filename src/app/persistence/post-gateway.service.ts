@@ -2,7 +2,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { API_URL, HEADERS } from './config';
-import { Observable, take, retry } from 'rxjs';
+import { Observable, retry } from 'rxjs';
 import { Post, NewPostDTO } from '../entities/Posts';
 
 @Injectable({
@@ -33,10 +33,9 @@ export class PostGatewayService {
       .pipe(retry(2));
   }
 
-  deletePost(id: number): void {
-    this.http
+  deletePost(id: number): Observable<void> {
+    return this.http
       .delete<void>(this.API_URL_POSTS + '/' + `${id}`)
-      .pipe(take(1), retry(2))
-      .subscribe();
+      .pipe(retry(2));
   }
 }

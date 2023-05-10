@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 
-import { catchError, take, BehaviorSubject } from 'rxjs';
+import { catchError, take, BehaviorSubject, of } from 'rxjs';
 
 import { PostGatewayService } from '../persistence/post-gateway.service';
 import { NewPostDTO, Post, UpdatedPostDTO } from '../entities/Posts';
+import { ALERT_MESSAGES } from '../entities/Alert';
+import { AlertControllerService } from './alert-controller.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +13,10 @@ import { NewPostDTO, Post, UpdatedPostDTO } from '../entities/Posts';
 export class PostControllerService {
   private posts$: BehaviorSubject<Post[]> = new BehaviorSubject<Post[]>([]);
 
-  constructor(private postGateway: PostGatewayService) {}
+  constructor(
+    private postGateway: PostGatewayService,
+    private alertController: AlertControllerService
+  ) {}
 
   public getPosts(): Post[] {
     if (!this.posts$.value.length)
@@ -41,9 +46,17 @@ export class PostControllerService {
   public addPost(newPost: NewPostDTO): void {
     this.postGateway
       .addPost(newPost)
-      .pipe(take(1))
+      .pipe(
+        take(1),
+        catchError(() => of(new Error()))
+      )
       .subscribe((createdPost) => {
-        this.setPosts([...this.posts$.getValue(), createdPost]);
+        if (createdPost instanceof Error) {
+          this.handleError('Se ha fallado al crear');
+        } else {
+          this.setPosts([...this.posts$.getValue(), createdPost]);
+          this.handleSuccess('Se ha creado el post');
+        }
       });
   }
 
@@ -52,18 +65,52 @@ export class PostControllerService {
     if (targetPost) {
       this.postGateway
         .updatePost({ ...targetPost, ...update })
-        .pipe(take(1))
+        .pipe(
+          take(1),
+          catchError(() => of(new Error()))
+        )
         .subscribe((updatedPost) => {
-          const posts = [...this.posts$.getValue()];
-          const index = posts.findIndex((post) => post.id === update.id);
-          posts[index] = updatedPost;
-          this.setPosts(posts);
+          if (updatedPost instanceof Error) {
+            this.handleError('Se ha fallado al actualizar');
+          } else {
+            const posts = [...this.posts$.getValue()];
+            const index = posts.findIndex((post) => post.id === update.id);
+            posts[index] = updatedPost;
+            this.setPosts(posts);
+            this.handleSuccess('Se ha actualizado el post');
+          }
         });
     }
   }
 
   public deletePost(id: number): void {
-    this.postGateway.deletePost(id);
+    this.postGateway
+      .deletePost(id)
+      .pipe(
+        take(1),
+        catchError(() => of(new Error()))
+      )
+      .subscribe((error) => {
+        if (error instanceof Error) {
+          this.handleError('Se ha fallado en eliminar');
+        } else {
+          this.handleSuccess('Se ha eliminado el post');
+        }
+      });
     this.setPosts(this.posts$.getValue().filter((post) => post.id !== id));
+  }
+
+  public handleError(title: string): void {
+    this.alertController.setAlert({
+      message: ALERT_MESSAGES.ERROR,
+      title,
+    });
+  }
+
+  public handleSuccess(title: string): void {
+    this.alertController.setAlert({
+      message: ALERT_MESSAGES.SUCCESS,
+      title,
+    });
   }
 }

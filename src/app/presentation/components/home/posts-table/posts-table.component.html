@@ -14,7 +14,7 @@
         <th scope="row">{{ post.id }}</th>
         <td class="post-title">{{ post.title }}</td>
         <td class="post-body">{{ post.body }}</td>
-        <td class="post-creator hidden">{{ post.userId | author | async }}</td>
+        <td class="post-creator hidden">{{ post.userId | author }}</td>
         <td class="post-options">
           <a
             [routerLink]="['/modificar-publicacion/', post.id]"

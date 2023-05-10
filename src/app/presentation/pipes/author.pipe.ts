@@ -10,11 +10,7 @@ export class AuthorPipe implements PipeTransform {
 
   constructor(private userController: UsersControllerService) {}
 
-  transform(id: number): Observable<string | number> {
-    return (
-      this.userController
-        .getUserById(id)
-        ?.pipe(map((user) => user?.name ?? id)) ?? of(id)
-    );
+  transform(id: number): string {
+    return this.userController.getUserById(id)?.name ?? `${id}`;
   }
 }

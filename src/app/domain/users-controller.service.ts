@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 import { User } from '../entities/Users';
 import { UserGatewayService } from '../persistence/user-gateway.service';
 
@@ -7,20 +7,20 @@ import { UserGatewayService } from '../persistence/user-gateway.service';
   providedIn: 'root',
 })
 export class UsersControllerService {
-  private users$: Observable<User[]> | undefined;
+  private users$: BehaviorSubject<User[]> = new BehaviorSubject<User[]>([]);
 
   constructor(private usersGateway: UserGatewayService) {}
 
-  public getAllUsers(): Observable<User[]> {
-    if (!this.users$) this.users$ = this.usersGateway.getAllUsers();
+  public getAllUsers(): BehaviorSubject<User[]> {
+    if (!this.users$.value.length) {
+      this.usersGateway.getAllUsers().subscribe((users) => {
+        this.users$.next([...users]);
+      });
+    }
     return this.users$;
   }
 
-  public getUserById(id: number): Observable<User | undefined> | undefined {
-    return this.users$?.pipe(
-      map((users) => {
-        return users.find((user) => user.id === id);
-      })
-    );
+  public getUserById(id: number): User | undefined {
+    return this.users$.getValue().find((user) => user.id === id);
   }
 }

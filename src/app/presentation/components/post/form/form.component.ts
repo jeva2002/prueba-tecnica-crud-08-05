@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { AlertControllerService } from 'src/app/domain/alert-controller.service';
 import { PostControllerService } from 'src/app/domain/post-controller.service';
 
 import { UsersControllerService } from 'src/app/domain/users-controller.service';
@@ -31,6 +32,7 @@ export class FormComponent implements OnInit {
   constructor(
     private userController: UsersControllerService,
     private postsController: PostControllerService,
+    private alertController: AlertControllerService,
     private route: ActivatedRoute,
     private builder: FormBuilder
   ) {}
@@ -70,8 +72,8 @@ export class FormComponent implements OnInit {
         this.postsController.addPost({
           ...this.form.value,
         } as unknown as NewPostDTO);
+        this.form.reset();
       }
-    } else {
     }
   }
 }

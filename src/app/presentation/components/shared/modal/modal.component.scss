@@ -1,4 +1,11 @@
-.modal-title {
+.modal-title,
+.modal-body {
   width: 100%;
   text-align: center;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }

@@ -12,6 +12,8 @@
 
 #create-post:hover {
   #create-post-message {
+    cursor: default;
+    user-select: none;
     animation-name: slideIn;
     animation-duration: 1s;
     animation-timing-function: ease;

@@ -7,6 +7,7 @@ export interface Alert {
 }
 
 export enum ALERT_MESSAGES {
-  DELETE = '¿Estás seguro de querer eliminar este post?',
+  DELETE = '¿Desea continuar con la acción?',
   SUCCESS = 'La operación se ha cumplido exitosamente',
+  ERROR = 'Algo ha salido mal en la operación',
 }
