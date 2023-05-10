@@ -2,7 +2,8 @@
 <h2 id="descripcion">Descripción</h2>
 
 Se realiza una interfaz que consume la API que JSONPLACEHOLDER brinda (https://jsonplaceholder.typicode.com), y se aplican operaciones básicas de HTTP. <br>
-La aplicación se encuentra desplegada en https://coffeepost-bb236.web.app/lista-productos/1
+La aplicación se encuentra desplegada en https://coffeepost-bb236.web.app/<br>
+Para instalar la aplicación se debe clonar esta del repositorio y posteriormente instalar las dependencias de este. Se debe contar con el CLI de Angular. Para iniciar la aplicación se deberá usar el comando "npm start" y posteriormente cuando el servidor de desarrollo se haya establecido aparecerá en la consola el enlace en el que se podrá visualizar la aplicación en el navegador. 
 
 <h3>Página inicial</h3>
 
