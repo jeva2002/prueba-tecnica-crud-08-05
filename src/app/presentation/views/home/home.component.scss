@@ -1,12 +1,31 @@
 #create-post {
   background-color: #212529;
   margin-bottom: 40px;
+  position: relative;
+
+  .link {
+    z-index: 2;
+  }
+
+  .logo {
+    position: absolute;
+    left: 0;
+    right: 0;
+    user-select: none;
+    z-index: 1;
+
+    strong {
+      color: #ededed;
+      font-size: 20px;
+    }
+  }
 
   #create-post-message {
     color: #ededed;
     font-weight: bold;
     font-size: 18px;
     margin-left: -500px;
+    z-index: 10;
   }
 }
 
@@ -17,7 +36,15 @@
     animation-name: slideIn;
     animation-duration: 1s;
     animation-timing-function: ease;
-    margin-left: -80px;
+    margin-left: -40px;
+  }
+}
+
+@media screen and (max-width: 1068px) {
+  #create-post:hover {
+    #create-post-message {
+      display: none;
+    }
   }
 }
 
@@ -27,6 +54,6 @@
   }
 
   to {
-    margin-left: -80px;
+    margin-left: -40px;
   }
 }

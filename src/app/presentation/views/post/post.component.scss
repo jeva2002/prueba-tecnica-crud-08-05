@@ -2,6 +2,23 @@
   background-color: #212529;
   margin-bottom: 40px;
 
+  .link {
+    z-index: 2;
+  }
+
+  .logo {
+    position: absolute;
+    left: 0;
+    right: 0;
+    user-select: none;
+    z-index: 1;
+
+    strong {
+      color: #ededed;
+      font-size: 20px;
+    }
+  }
+
   #return-message {
     cursor: default;
     user-select: none;
@@ -17,7 +34,15 @@
     animation-name: slideIn;
     animation-duration: 1s;
     animation-timing-function: ease;
-    margin-left: -80px;
+    margin-left: -40px;
+  }
+}
+
+@media screen and (max-width: 1068px) {
+  #create-post:hover {
+    #create-post-message {
+      display: none;
+    }
   }
 }
 
@@ -27,6 +52,6 @@
   }
 
   to {
-    margin-left: -80px;
+    margin-left: -40px;
   }
 }

@@ -7,7 +7,7 @@ import {
 import { PostGatewayService } from './post-gateway.service';
 import { postsMock } from '../entities/Posts.mock';
 
-fdescribe('PostGatewayService', () => {
+describe('PostGatewayService', () => {
   let postService: PostGatewayService;
   let httpController: HttpTestingController;
 
