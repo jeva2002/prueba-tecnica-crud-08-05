@@ -1,6 +1,12 @@
 .form-container {
   width: 600px;
 
+  .input-error {
+    margin-left: 12px;
+    font-size: 14px;
+    color: #aaa;
+  }
+
   .btn {
     width: 100%;
     height: 40px;

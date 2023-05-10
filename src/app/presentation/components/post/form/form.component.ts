@@ -19,6 +19,9 @@ export class FormComponent implements OnInit {
     title: ['', Validators.required],
     body: ['', Validators.required],
   });
+  bodyField = this.form.controls.body;
+  titleField = this.form.controls.title;
+  userIdField = this.form.controls.userId;
 
   users$: Observable<User[]> = new Observable();
   postId: string | null = null;
@@ -68,6 +71,7 @@ export class FormComponent implements OnInit {
           ...this.form.value,
         } as unknown as NewPostDTO);
       }
+    } else {
     }
   }
 }

@@ -16,6 +16,13 @@
           {{ user.name }}
         </option>
       </select>
+
+      <strong
+        class="input-error"
+        *ngIf="userIdField.touched && userIdField.hasError('required')"
+      >
+        Este campo es requerido
+      </strong>
     </div>
     <div class="">
       <label for="title" class="form-label">Título</label>
@@ -25,6 +32,12 @@
         id="title"
         placeholder="La Broma Infinita"
       />
+      <strong
+        class="input-error"
+        *ngIf="titleField.touched && titleField.hasError('required')"
+      >
+        Este campo es requerido
+      </strong>
     </div>
     <div class="">
       <label for="body" class="form-label">Texto</label>
@@ -35,7 +48,15 @@
         rows="4"
         placeholder="Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum ullam praesentium eum ad tenetur magnam cumque explicabo voluptatibus iste consectetur?"
       ></textarea>
+      <strong
+        class="input-error"
+        *ngIf="bodyField.touched && bodyField.hasError('required')"
+      >
+        Este campo es requerido
+      </strong>
     </div>
-    <button type="submit" class="btn btn-dark mt-3">Enviar</button>
+    <button type="submit" class="btn btn-dark mt-3" [disabled]="!form.valid">
+      Enviar
+    </button>
   </form>
 </div>

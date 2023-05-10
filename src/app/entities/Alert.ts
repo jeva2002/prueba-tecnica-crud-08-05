@@ -4,5 +4,9 @@ export interface Alert {
   actions?: {
     continue: () => void;
   };
-  style: 'info' | 'danger' | 'success';
+}
+
+export enum ALERT_MESSAGES {
+  DELETE = '¿Estás seguro de querer eliminar este post?',
+  SUCCESS = 'La operación se ha cumplido exitosamente',
 }

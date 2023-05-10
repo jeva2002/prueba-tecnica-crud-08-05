@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AlertControllerService } from 'src/app/domain/alert-controller.service';
 import { PostControllerService } from 'src/app/domain/post-controller.service';
+import { ALERT_MESSAGES } from 'src/app/entities/Alert';
 import { Post } from 'src/app/entities/Posts';
 
 @Component({
@@ -31,9 +32,8 @@ export class PostsTableComponent implements OnInit {
 
   deletePost(id: number): void {
     this.alertController.setAlert({
-      message: 'mucho texto',
-      style: 'danger',
-      title: 'Algo',
+      message: ALERT_MESSAGES.DELETE,
+      title: 'Eliminar el post con el id ' + id,
       actions: {
         continue: () => this.postController.deletePost(id),
       },
