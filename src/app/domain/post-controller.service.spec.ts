@@ -4,7 +4,7 @@ import { PostControllerService } from './post-controller.service';
 import { PostGatewayService } from '../persistence/post-gateway.service';
 import { createPostMock, postsMock } from '../entities/Posts.mock';
 
-import { of, take } from 'rxjs';
+import { of } from 'rxjs';
 import { Post } from '../entities/Posts';
 
 describe('PostControllerService', () => {
@@ -42,10 +42,8 @@ describe('PostControllerService', () => {
 
       postGatewayServiceSpy.getAllPosts.and.returnValue(of(mockData));
 
-      postControllerService.getPosts().subscribe((data) => {
-        expect(data.length).toBe(mockData.length);
-        doneFn();
-      });
+      const data = postControllerService.getPosts();
+      expect(data.length).toBe(mockData.length);
     });
   });
 
@@ -54,10 +52,8 @@ describe('PostControllerService', () => {
       const postsMock = createPostMock(2);
       postControllerService.setPosts([...postsMock]);
 
-      postControllerService.getPostById(postsMock[0].id)?.subscribe((data) => {
-        expect(data?.id).toBe(postsMock[0].id);
-        doneFn();
-      });
+      const targetPost = postControllerService.getPostById(postsMock[0].id);
+      expect(targetPost?.id).toBe(postsMock[0].id);
     });
   });
 
@@ -71,13 +67,8 @@ describe('PostControllerService', () => {
       postGatewayServiceSpy.addPost.and.returnValue(of({ ...createdPost }));
       postControllerService.addPost(dto);
 
-      postControllerService
-        .getPosts()
-        .pipe(take(1))
-        .subscribe((data) => {
-          expect(data.length).toBe(postsMock.length + 1);
-          doneFn();
-        });
+      const data = postControllerService.getPosts();
+      expect(data.length).toBe(postsMock.length + 1);
     });
   });
 
@@ -93,14 +84,8 @@ describe('PostControllerService', () => {
       postGatewayServiceSpy.updatePost.and.returnValue(of({ ...updatedPost }));
       postControllerService.updatePost(updatedPost);
 
-      postControllerService
-        .getPostById(postsMock[0].id)
-        ?.subscribe((targetPost) => {
-          if (targetPost) {
-            expect(targetPost).toEqual(updatedPost);
-          }
-          doneFn();
-        });
+      const targetPost = postControllerService.getPostById(postsMock[0].id);
+      expect(targetPost).toEqual(updatedPost);
     });
   });
 
@@ -112,10 +97,8 @@ describe('PostControllerService', () => {
       postGatewayServiceSpy.deletePost.and.returnValue();
       postControllerService.deletePost(postsMock[0].id);
 
-      postControllerService.getPosts().subscribe((posts) => {
-        expect(posts.length).toBe(postsMock.length - 1);
-        doneFn();
-      });
+      const posts = postControllerService.getPosts();
+      expect(posts.length).toBe(postsMock.length - 1);
     });
   });
 });

@@ -11,7 +11,7 @@ import { User } from 'src/app/entities/Users';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  posts$: Observable<Post[]> = new Observable();
+  posts: Post[] = [];
   users$: Observable<User[]> = new Observable();
 
   constructor(
@@ -21,7 +21,9 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.users$ = this.usersController.getAllUsers();
-    this.posts$ = this.postsController.getPosts();
+    this.postsController.getPostsObservable().subscribe((posts) => {
+      this.posts = posts;
+    });
   }
 
   public getPagesByPosts(posts: Post[]): number {
@@ -29,6 +31,6 @@ export class HomeComponent implements OnInit {
   }
 
   updatePosts(id: number): void {
-    this.posts$ = this.postsController.getPosts();
+    // this.posts$ = this.postsController.getPosts();
   }
 }

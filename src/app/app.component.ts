@@ -14,6 +14,6 @@ export class AppComponent implements OnInit {
   constructor(private postsController: PostControllerService) {}
 
   ngOnInit(): void {
-    this.postsController.getPosts().pipe(take(1)).subscribe();
+    this.postsController.getPosts();
   }
 }

@@ -44,17 +44,16 @@ export class FormComponent implements OnInit {
   }
 
   setPostValues(): void {
-    this.postsController
-      .getPostById(parseInt(this.postId ?? ''))
-      ?.subscribe((post) => {
-        if (post) {
-          const { id, ...formValues } = post;
-          this.form.patchValue({
-            ...formValues,
-            userId: formValues.userId.toString(),
-          });
-        }
+    const targetPost = this.postsController.getPostById(
+      parseInt(this.postId ?? '')
+    );
+    if (targetPost) {
+      const { id, ...formValues } = targetPost;
+      this.form.patchValue({
+        ...formValues,
+        userId: formValues.userId.toString(),
       });
+    }
   }
 
   submit(): void {

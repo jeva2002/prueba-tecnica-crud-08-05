@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Observable, map, take, of } from 'rxjs';
+import { Observable, map, take, of, BehaviorSubject } from 'rxjs';
 
 import { PostGatewayService } from '../persistence/post-gateway.service';
 import { NewPostDTO, Post, UpdatedPostDTO } from '../entities/Posts';
@@ -9,24 +9,33 @@ import { NewPostDTO, Post, UpdatedPostDTO } from '../entities/Posts';
   providedIn: 'root',
 })
 export class PostControllerService {
-  private posts$: Observable<Post[]> | undefined;
+  private posts$: BehaviorSubject<Post[]> = new BehaviorSubject<Post[]>([]);
 
   constructor(private postGateway: PostGatewayService) {}
 
-  public getPosts(): Observable<Post[]> {
-    if (!this.posts$) this.posts$ = this.postGateway.getAllPosts();
+  public getPosts(): Post[] {
+    if (!this.posts$.value.length)
+      this.postGateway.getAllPosts().subscribe((posts) => {
+        this.setPosts(posts);
+      });
+    return this.posts$.value;
+  }
+
+  public getPostsObservable(): BehaviorSubject<Post[]> {
+    if (!this.posts$.value.length)
+      this.postGateway.getAllPosts().subscribe((posts) => {
+        this.setPosts(posts);
+      });
     return this.posts$;
   }
 
   public setPosts(posts: Post[]): void {
-    this.posts$ = of(posts);
+    this.posts$.next([...posts]);
   }
 
-  public getPostById(id: number): Observable<Post | undefined> | void {
-    const targetPost = this.posts$?.pipe(
-      map((posts) => posts.find((post) => post.id === id))
-    );
-    if (targetPost) return targetPost;
+  public getPostById(id: number): Post | undefined {
+    const targetPost = this.posts$.getValue().find((post) => post.id === id);
+    return targetPost;
   }
 
   public addPost(newPost: NewPostDTO): void {
@@ -34,44 +43,27 @@ export class PostControllerService {
       .addPost(newPost)
       .pipe(take(1))
       .subscribe((createdPost) => {
-        if (!!this.posts$) {
-          this.posts$ = this.posts$.pipe(
-            map((posts) => {
-              return [...posts, createdPost];
-            })
-          );
-        } else this.posts$ = of([createdPost]);
+        this.setPosts([...this.posts$.getValue(), createdPost]);
       });
   }
 
   public updatePost(update: UpdatedPostDTO): void {
-    this.getPostById(update.id)?.subscribe((targetPost) => {
-      if (targetPost) {
-        this.postGateway
-          .updatePost({ ...targetPost, ...update })
-          .pipe(take(1))
-          .subscribe((updatedPost) => {
-            this.posts$ = this.posts$?.pipe(
-              map((posts) => {
-                const index = posts.findIndex((post) => post.id === update.id);
-                posts[index] = updatedPost;
-                return posts;
-              })
-            );
-          });
-      }
-    });
+    const targetPost = this.getPostById(update.id);
+    if (targetPost) {
+      this.postGateway
+        .updatePost({ ...targetPost, ...update })
+        .pipe(take(1))
+        .subscribe((updatedPost) => {
+          const posts = [...this.posts$.getValue()];
+          const index = posts.findIndex((post) => post.id === update.id);
+          posts[index] = updatedPost;
+          this.setPosts(posts);
+        });
+    }
   }
 
   public deletePost(id: number): void {
     this.postGateway.deletePost(id);
-    if (this.posts$) {
-      this.posts$ = this.posts$.pipe(
-        map((posts) => {
-          return posts.filter((post) => post.id !== id);
-        })
-      );
-    }
-    this.posts$?.subscribe((alg) => console.log(alg.length));
+    this.setPosts(this.posts$.getValue().filter((post) => post.id !== id));
   }
 }
