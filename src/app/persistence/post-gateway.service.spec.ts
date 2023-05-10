@@ -7,7 +7,7 @@ import {
 import { PostGatewayService } from './post-gateway.service';
 import { postsMock } from '../entities/Posts.mock';
 
-describe('PostGatewayService', () => {
+fdescribe('PostGatewayService', () => {
   let postService: PostGatewayService;
   let httpController: HttpTestingController;
 
@@ -60,7 +60,7 @@ describe('PostGatewayService', () => {
       });
 
       const req = httpController.expectOne(
-        postService.API_URL_POSTS + `${postsMock[0].id}`
+        postService.API_URL_POSTS + `/${postsMock[0].id}`
       );
       req.flush(postsMock[0]);
       httpController.verify();
@@ -72,7 +72,7 @@ describe('PostGatewayService', () => {
       postService.deletePost(1).subscribe(() => doneFn());
 
       const req = httpController.expectOne(
-        postService.API_URL_POSTS + `${postsMock[0].id}`
+        postService.API_URL_POSTS + `/${postsMock[0].id}`
       );
       req.flush(postsMock[0]);
       expect(req.request.method).toEqual('DELETE');

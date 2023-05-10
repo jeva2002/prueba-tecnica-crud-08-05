@@ -3,6 +3,8 @@
   margin-bottom: 40px;
 
   #return-message {
+    cursor: default;
+    user-select: none;
     color: #ededed;
     font-weight: bold;
     font-size: 18px;

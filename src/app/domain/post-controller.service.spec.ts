@@ -4,10 +4,10 @@ import { PostControllerService } from './post-controller.service';
 import { PostGatewayService } from '../persistence/post-gateway.service';
 import { createPostMock } from '../entities/Posts.mock';
 
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Post } from '../entities/Posts';
 
-fdescribe('PostControllerService', () => {
+describe('PostControllerService', () => {
   let postControllerService: PostControllerService;
   let postGatewayServiceSpy: jasmine.SpyObj<PostGatewayService>;
 
@@ -98,7 +98,7 @@ fdescribe('PostControllerService', () => {
       const postsMock = createPostMock(2);
       postControllerService.setPosts(postsMock);
 
-      postGatewayServiceSpy.deletePost.and.returnValue();
+      postGatewayServiceSpy.deletePost.and.returnValue(new Observable<void>());
       postControllerService.deletePost(postsMock[0].id);
 
       const posts = postControllerService.getPosts();
