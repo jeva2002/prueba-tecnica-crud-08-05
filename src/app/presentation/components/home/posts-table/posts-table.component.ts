@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { PostControllerService } from 'src/app/domain/post-controller.service';
 import { Post } from 'src/app/entities/Posts';
 
 @Component({
@@ -12,8 +13,12 @@ export class PostsTableComponent implements OnInit {
   lastPost = this.firstPost + 15;
 
   @Input() posts: Post[] = [];
+  @Output() deletedElement = new EventEmitter<number>();
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private postController: PostControllerService
+  ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -21,5 +26,10 @@ export class PostsTableComponent implements OnInit {
       this.firstPost = (currentPage - 1) * 15;
       this.lastPost = this.firstPost + 15;
     });
+  }
+
+  deletePost(id: number): void {
+    this.postController.deletePost(id);
+    this.deletedElement.emit(id);
   }
 }

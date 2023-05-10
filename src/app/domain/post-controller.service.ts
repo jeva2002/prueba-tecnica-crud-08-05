@@ -34,9 +34,7 @@ export class PostControllerService {
       .addPost(newPost)
       .pipe(take(1))
       .subscribe((createdPost) => {
-        console.log("holi")
         if (!!this.posts$) {
-          console.log("la")
           this.posts$ = this.posts$.pipe(
             map((posts) => {
               return [...posts, createdPost];
@@ -67,11 +65,13 @@ export class PostControllerService {
 
   public deletePost(id: number): void {
     this.postGateway.deletePost(id);
-    this.posts$ = this.posts$?.pipe(
-      map((posts) => {
-        const index = posts.findIndex((post) => post.id === id);
-        return posts.slice(index, index + 1);
-      })
-    );
+    if (this.posts$) {
+      this.posts$ = this.posts$.pipe(
+        map((posts) => {
+          return posts.filter((post) => post.id !== id);
+        })
+      );
+    }
+    this.posts$?.subscribe((alg) => console.log(alg.length));
   }
 }
