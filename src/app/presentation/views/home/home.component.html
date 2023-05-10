@@ -20,7 +20,7 @@
 <main>
   <app-pagination [pagesByPosts]="getPagesByPosts(posts)" />
   <div class="my-2 mx-0 mx-md-5">
-    <app-posts-table [posts]="posts" (deletedElement)="updatePosts($event)" />
+    <app-posts-table [posts]="posts" />
   </div>
   <app-pagination [pagesByPosts]="getPagesByPosts(posts)" />
 </main>

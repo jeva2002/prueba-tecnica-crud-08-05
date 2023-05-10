@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AlertControllerService } from 'src/app/domain/alert-controller.service';
 import { PostControllerService } from 'src/app/domain/post-controller.service';
 import { Post } from 'src/app/entities/Posts';
 
@@ -13,11 +14,11 @@ export class PostsTableComponent implements OnInit {
   lastPost = this.firstPost + 15;
 
   @Input() posts: Post[] = [];
-  @Output() deletedElement = new EventEmitter<number>();
 
   constructor(
     private route: ActivatedRoute,
-    private postController: PostControllerService
+    private postController: PostControllerService,
+    private alertController: AlertControllerService
   ) {}
 
   ngOnInit(): void {
@@ -29,7 +30,13 @@ export class PostsTableComponent implements OnInit {
   }
 
   deletePost(id: number): void {
-    this.postController.deletePost(id);
-    this.deletedElement.emit(id);
+    this.alertController.setAlert({
+      message: 'mucho texto',
+      style: 'danger',
+      title: 'Algo',
+      actions: {
+        continue: () => this.postController.deletePost(id),
+      },
+    });
   }
 }

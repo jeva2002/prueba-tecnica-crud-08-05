@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Observable, map, take, of, BehaviorSubject } from 'rxjs';
+import { catchError, take, BehaviorSubject } from 'rxjs';
 
 import { PostGatewayService } from '../persistence/post-gateway.service';
 import { NewPostDTO, Post, UpdatedPostDTO } from '../entities/Posts';

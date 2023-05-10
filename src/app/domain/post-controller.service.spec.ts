@@ -2,12 +2,12 @@ import { TestBed } from '@angular/core/testing';
 
 import { PostControllerService } from './post-controller.service';
 import { PostGatewayService } from '../persistence/post-gateway.service';
-import { createPostMock, postsMock } from '../entities/Posts.mock';
+import { createPostMock } from '../entities/Posts.mock';
 
 import { of } from 'rxjs';
 import { Post } from '../entities/Posts';
 
-describe('PostControllerService', () => {
+fdescribe('PostControllerService', () => {
   let postControllerService: PostControllerService;
   let postGatewayServiceSpy: jasmine.SpyObj<PostGatewayService>;
 
@@ -44,6 +44,7 @@ describe('PostControllerService', () => {
 
       const data = postControllerService.getPosts();
       expect(data.length).toBe(mockData.length);
+      doneFn();
     });
   });
 
@@ -54,6 +55,7 @@ describe('PostControllerService', () => {
 
       const targetPost = postControllerService.getPostById(postsMock[0].id);
       expect(targetPost?.id).toBe(postsMock[0].id);
+      doneFn();
     });
   });
 
@@ -69,6 +71,7 @@ describe('PostControllerService', () => {
 
       const data = postControllerService.getPosts();
       expect(data.length).toBe(postsMock.length + 1);
+      doneFn();
     });
   });
 
@@ -86,6 +89,7 @@ describe('PostControllerService', () => {
 
       const targetPost = postControllerService.getPostById(postsMock[0].id);
       expect(targetPost).toEqual(updatedPost);
+      doneFn();
     });
   });
 
@@ -99,6 +103,7 @@ describe('PostControllerService', () => {
 
       const posts = postControllerService.getPosts();
       expect(posts.length).toBe(postsMock.length - 1);
+      doneFn();
     });
   });
 });

@@ -1,0 +1,44 @@
+<div
+  class="modal fade"
+  id="modal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" *ngIf="data">
+          {{ data.title }}
+        </h1>
+        <button
+          *ngIf="data && !data.actions"
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body" *ngIf="data">{{ data.message }}</div>
+      <div class="modal-footer" *ngIf="data && data.actions">
+        <button
+          type="button"
+          class="btn btn-outline-dark"
+          data-bs-dismiss="modal"
+        >
+          Cancelar
+        </button>
+        <button
+          type="button"
+          data-bs-dismiss="modal"
+          class="btn btn-dark"
+          (click)="data.actions.continue()"
+        >
+          Continuar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

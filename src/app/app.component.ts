@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { take } from 'rxjs';
+import { Modal } from 'bootstrap';
 
 import { PostControllerService } from './domain/post-controller.service';
+import { AlertControllerService } from './domain/alert-controller.service';
 
 @Component({
   selector: 'app-root',
@@ -9,11 +10,16 @@ import { PostControllerService } from './domain/post-controller.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  title = 'CRUD post app';
+  formModal: any;
 
-  constructor(private postsController: PostControllerService) {}
+  constructor(
+    private postsController: PostControllerService,
+    private alertController: AlertControllerService
+  ) {}
 
   ngOnInit(): void {
     this.postsController.getPosts();
+    this.formModal = new Modal(document.getElementById('modal') as Element);
+    this.alertController.setModalConfig(this.formModal);
   }
 }

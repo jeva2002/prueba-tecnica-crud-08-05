@@ -11,7 +11,7 @@ import { PostsTableComponent } from './presentation/components/home/posts-table/
 import { PostComponent } from './presentation/views/post/post.component';
 import { FormComponent } from './presentation/components/post/form/form.component';
 import { AuthorPipe } from './presentation/pipes/author.pipe';
-import { ModalComponent } from './presentation/shared/modal/modal.component';
+import { ModalComponent } from './presentation/components/shared/modal/modal.component';
 
 @NgModule({
   declarations: [

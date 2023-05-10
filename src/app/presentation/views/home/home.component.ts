@@ -29,8 +29,4 @@ export class HomeComponent implements OnInit {
   public getPagesByPosts(posts: Post[]): number {
     return Math.ceil(posts.length / 15);
   }
-
-  updatePosts(id: number): void {
-    // this.posts$ = this.postsController.getPosts();
-  }
 }
