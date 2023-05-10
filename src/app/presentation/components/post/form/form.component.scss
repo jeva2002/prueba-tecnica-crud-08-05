@@ -1,0 +1,15 @@
+.form-container {
+  width: 600px;
+
+  .btn {
+    width: 100%;
+    height: 40px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .form-container {
+    width: 100vw;
+    padding: 0 24px;
+  }
+}

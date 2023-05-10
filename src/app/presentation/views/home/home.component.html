@@ -1,4 +1,4 @@
-<div class="container-fluid row py-2" id="create-post">
+<header class="row py-2" id="create-post">
   <a routerLink="/nueva-publicacion" class="col-1">
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -15,7 +15,7 @@
   <div class="col-11 d-flex align-items-center">
     <span id="create-post-message">Crea un nuevo post</span>
   </div>
-</div>
+</header>
 
 <main>
   <ng-container *ngIf="posts$ | async as posts">

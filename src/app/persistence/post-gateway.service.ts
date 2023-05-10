@@ -24,14 +24,14 @@ export class PostGatewayService {
   }
 
   updatePost(post: Post): Observable<Post> {
-    return this.http.put<Post>(this.API_URL_POSTS + post.id, post, {
+    return this.http.put<Post>(this.API_URL_POSTS + '/' + post.id, post, {
       headers: HEADERS,
     });
   }
 
   deletePost(id: number): void {
     const subscription = this.http
-      .delete<void>(this.API_URL_POSTS + `${id}`)
+      .delete<void>(this.API_URL_POSTS + '/' + `${id}`)
       .pipe(take(1))
       .subscribe();
   }

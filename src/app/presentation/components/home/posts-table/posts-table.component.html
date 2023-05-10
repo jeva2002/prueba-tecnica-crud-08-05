@@ -5,7 +5,7 @@
         <th scope="col">#</th>
         <th scope="col">Título</th>
         <th scope="col">Texto</th>
-        <th class="hidden" scope="col">Creador</th>
+        <th class="hidden" scope="col">Autor</th>
         <th scope="col">Opciones</th>
       </tr>
     </thead>
@@ -17,7 +17,7 @@
         <td class="post-creator hidden">{{ post.userId | author | async }}</td>
         <td class="post-options">
           <a
-            [routerLink]="['modificar-publicacion/', post.id]"
+            [routerLink]="['/modificar-publicacion/', post.id]"
             class="edit-post"
             >Editar</a
           >

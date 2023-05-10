@@ -1,1 +1,40 @@
-<p>form works!</p>
+<div class="form-container">
+  <h1 class="text-center mb-5">{{ mainTitle }}</h1>
+
+  <form class="d-flex flex-column gap-3" [formGroup]="form" (submit)="submit()">
+    <div>
+      <label for="author" class="form-label">Autor</label>
+      <select
+        class="form-select"
+        formControlName="userId"
+        id="author"
+        *ngIf="users$ | async as users"
+      >
+        <option value="" selected>Selecciona al autor del post</option>
+        <option *ngFor="let user of users" [value]="user.id">
+          {{ user.name }}
+        </option>
+      </select>
+    </div>
+    <div class="">
+      <label for="title" class="form-label">Título</label>
+      <input
+        formControlName="title"
+        class="form-control"
+        id="title"
+        placeholder="La Broma Infinita"
+      />
+    </div>
+    <div class="">
+      <label for="body" class="form-label">Texto</label>
+      <textarea
+        formControlName="body"
+        class="form-control"
+        id="body"
+        rows="4"
+        placeholder="Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum ullam praesentium eum ad tenetur magnam cumque explicabo voluptatibus iste consectetur?"
+      ></textarea>
+    </div>
+    <button type="submit" class="btn btn-dark mt-3">Enviar</button>
+  </form>
+</div>

@@ -34,7 +34,9 @@ export class PostControllerService {
       .addPost(newPost)
       .pipe(take(1))
       .subscribe((createdPost) => {
+        console.log("holi")
         if (!!this.posts$) {
+          console.log("la")
           this.posts$ = this.posts$.pipe(
             map((posts) => {
               return [...posts, createdPost];
