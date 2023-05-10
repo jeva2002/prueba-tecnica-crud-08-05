@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "dist/prueba-tecnica-crud-08-05",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
