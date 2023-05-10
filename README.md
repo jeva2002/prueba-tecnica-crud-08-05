@@ -1,27 +1,29 @@
-# PruebaTecnicaCrud0805
+<h1 align="center">Prueba técnica CRUD</h1>
+<h2 id="descripcion">Descripción</h2>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.4.
+Se realiza una interfaz que consume la API que JSONPLACEHOLDER brinda (https://jsonplaceholder.typicode.com), y se aplican operaciones básicas de HTTP. <br>
+La aplicación se encuentra desplegada en https://coffeepost-bb236.web.app/lista-productos/1
 
-## Development server
+<h3>Página inicial</h3>
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+La página inicial de la aplicación tiene una tabla de datos paginada que permite ver los datos de los posts que brinda la API, cada post tiene la opción de editar o eliminar, también se tiene en la esquina superior izquierda un botón para crear posts.<br/>
+Encima y debajo de la tabla tendremos el menu que permite desplazarnos entre las distintas páginas de esta.<br>
+Al dar click en el enlace para eliminar, aparecerá un modal que pedirá que se confirme la acción a realizar. Si se confirma esta se eliminará el post de la tabla y esto se verá reflejado inmediatamente y se lanzará un modal que mostrará el resultado de la acción. De lo contrario se podrá cerrar el modal.
 
-## Code scaffolding
+<h3>Página para publicar</h3>
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Por otro lado, las opciones de editar y crear nos redirigirán a un formulario en una página específica para publicar; dependiendo de si se seleccionó editar o crear; la página tendrá un título u otro y el formulario ya tendrá datos o no. <br>
+Todos los campos del formulario son obligatorios; si se incumple con esto el botón para enviar estará inhabilitado y si alguno de los campos fue seleccionado y es inválido aparecerá un mensaje que señala el error en el input. Al llenar el formulario y enviar, este se mostrará un modal que notificará del estado de la acción. <br>
 
-## Build
+<h2 id="tecnologias">Tecnologías</h2>
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+<ul>
+  <li>Angular 16</li>
+  <li>Bootstrap 5</li>
+  <li>Rxjs</li>
+</ul>
 
-## Running unit tests
+<h2 id="construccion">Construcción</h2>
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+La aplicación fue desarrollada pensando en una arquitectura por capas que brindase una mayor facilidad de desarrollo. En la capa de la presentación se encuentran todos los componentes; separadas las vistas de los componentes que las forman. En la capa de dominio encontraremos la lógica del negocio; allí estarán todos los controladores de la información (los posts, los usuarios y los mensajes para las alertas). Por último, se encontrará la capa de persistencia que es la que tendrá todos los métodos http y será la encargada de interactuar con la API. <br>
+Se buscó que toda la aplicación tuviese un código limpio que fuera autodescriptivo. 
